@@ -39,4 +39,3 @@ def create_report(name,url,ip_adr,domain,nmap,rbt_txt,whois,lkp,enm):
 site = raw_input('Site you want to scan : ')
 name = raw_input('Folder name : ')
 gather_info(str(name),str(site))
-#gather_info('test','www.scorify.me')
