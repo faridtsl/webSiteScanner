@@ -13,7 +13,7 @@ create_dir(ROOT_DIR)
 def gather_info(name, url):
     domain = get_domain_name('http://'+url)
     ip_adr = get_ip_address(domain)
-    nmap = get_nmap('-F',ip_adr[0])
+    nmap = get_nmap('-F',ip_adr)
     rbt_txt = get_robots_txt('http://'+url)
     whois = get_whois(domain)
     lookup = get_lookup(url)
