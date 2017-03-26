@@ -7,25 +7,18 @@ def get_lookup(url):
     command2 = 'nslookup -type=soa ' + url
     process = os.popen(command)
     result = ''
-    for line in process:
-        result = result + line
-
+    result +=str(process.read())
     process = os.popen(command1)
-    for line in process:
-        result = result + line
-
+    result += str(process.read())
     process = os.popen(command2)
-    for line in process:
-        result = result + line
-
+    result += str(process.read())
     return result
 
 def get_enum(url):
     print('dnsenum ...')
     command = 'dnsenum ' + url
     process = os.popen(command)
-    result = ''
-    for line in process:
-        result = result + line
-
+    result = str(process.read())
+    if result == "":
+        result="Error while getting DNSENUM results"
     return result
