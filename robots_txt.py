@@ -1,4 +1,4 @@
-import requests
+import lib.requests as requests
 
 proxies = {"http": None,
            "https": None}
