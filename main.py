@@ -7,14 +7,16 @@ from whois import *
 from lookup import *
 
 
-ROOT_DIR = "~/reconnaissance"
+ROOT_DIR = "./reconnaissance"
 create_dir(ROOT_DIR)
 
 def gather_info(name, url):
-    domain = get_domain_name('http://'+url)
+    if(url[:4]!="http"):
+        url="http://"+url
+    domain = get_domain_name(url)
     ip_adr = get_ip_address(domain)
     nmap = get_nmap('-F',ip_adr)
-    rbt_txt = get_robots_txt('http://'+url)
+    rbt_txt = get_robots_txt(url)
     whois = get_whois(domain)
     lookup = get_lookup(url)
     enm = get_enum(url)
@@ -24,18 +26,30 @@ def create_report(name,url,ip_adr,domain,nmap,rbt_txt,whois,lkp,enm):
     print('Creating report ...')
     prjct_dir = ROOT_DIR + '/' + name
     create_dir(prjct_dir)
-    write_file(prjct_dir + '/full_url.txt', url)
-    ip = ip_adr[0]
-    mail = ip_adr[1]
-    dt = 'IP : ' + ip + '\n Mail : '+ mail
-    write_file(prjct_dir + '/ip.txt', dt)
-    write_file(prjct_dir + '/domain.txt', domain)
-    write_file(prjct_dir + '/nmap.txt', nmap)
-    write_file(prjct_dir + '/rbt.txt', rbt_txt)
-    write_file(prjct_dir + '/whois.txt', whois)
-    write_file(prjct_dir + '/lookup.txt', lkp)
-    write_file(prjct_dir + '/dnsenum.txt', enm)
+    write_file(prjct_dir+"/Rapport.txt","Rapport sur le site   : "+url)
+    write_file(prjct_dir+"/Rapport.txt","\n=======================\n\n")
+    write_file(prjct_dir+"/Rapport.txt","\n\t- Domain Name       : "+domain)
+    write_file(prjct_dir + "/Rapport.txt","\n\t=====================\n\n")
+    write_file(prjct_dir+"/Rapport.txt","\n\t- Ip Address        : " + ip_adr)
+    write_file(prjct_dir + "/Rapport.txt","\n\t======================\n\n")
+    write_file(prjct_dir+"/Rapport.txt","\n\t- NMAP Results      : ")
+    write_file(prjct_dir + "/Rapport.txt", "\n\t======================\n\n")
+    write_file(prjct_dir + "/Rapport.txt", reindent(nmap,"\t\t"))
+    write_file(prjct_dir+"/Rapport.txt","\n\t- Robot text result : ")
+    write_file(prjct_dir + "/Rapport.txt", "\n\t======================\n\n")
+    write_file(prjct_dir + "/Rapport.txt",reindent(rbt_txt,"\t\t"))
+    write_file(prjct_dir+"/Rapport.txt","\n\t- WHOIS result      : ")
+    write_file(prjct_dir + "/Rapport.txt", "\n\t======================\n\n")
+    write_file(prjct_dir + "/Rapport.txt", reindent(whois,"\t\t"))
+    write_file(prjct_dir+"/Rapport.txt","\n\t- Lookup result     : ")
+    write_file(prjct_dir + "/Rapport.txt", "\n\t======================\n\n")
+    write_file(prjct_dir + "/Rapport.txt", reindent(lkp,"\t\t"))
+    write_file(prjct_dir+"/Rapport.txt","\n\t- DNSENUM result    : ")
+    write_file(prjct_dir + "/Rapport.txt", "\n\t======================\n\n")
+    write_file(prjct_dir + "/Rapport.txt",reindent(enm,"\t\t"))
 
-site = raw_input('Site you want to scan : ')
-name = raw_input('Folder name : ')
+
+site = input('Site you want to scan : ')
+name = input('Folder name : ')
 gather_info(str(name),str(site))
+

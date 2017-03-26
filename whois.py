@@ -6,4 +6,3 @@ def get_whois(url):
     command = 'whois ' + url
     process = os.popen(command)
     return str(process.read())
-

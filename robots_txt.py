@@ -1,5 +1,7 @@
-import urllib2
-import io
+import requests
+
+proxies = {"http": None,
+           "https": None}
 
 def get_robots_txt(url):
     print('Robot.txt ...')
@@ -7,7 +9,11 @@ def get_robots_txt(url):
         path = url
     else:
         path = url + '/'
-    req = urllib2.urlopen(path+'robots.txt')
+    req= requests.get(url+'/robots.txt', proxies=proxies) #Getting the HTML content of the webpage
+    encoding=req.encoding
+    if encoding==None:
+        encoding="utf-8"
+    req=req.content.decode(encoding)
     data = ""
     for line in req:
         data = data + line
