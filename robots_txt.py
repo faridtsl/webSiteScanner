@@ -9,12 +9,11 @@ def get_robots_txt(url):
         path = url
     else:
         path = url + '/'
-    req= requests.get(url+'/robots.txt', proxies=proxies) #Getting the HTML content of the webpage
+    req= requests.get(path+'robots.txt', proxies=proxies) #Getting the HTML content of the webpage
     encoding=req.encoding
     if encoding==None:
         encoding="utf-8"
     req=req.content.decode(encoding)
-    data = ""
-    for line in req:
-        data = data + line
-    return data
+    if "Error - 404.0 - Not Found" in req:
+        req="Error while getting robot.txt file"
+    return req

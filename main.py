@@ -14,15 +14,15 @@ def gather_info(name, url):
     if(url[:4]!="http"):
         url="http://"+url
     domain = get_domain_name(url)
-    ip_adr = get_ip_address(domain)
+    (ip_adr,mail_adr) = get_ip_address(domain)
     nmap = get_nmap('-F',ip_adr)
     rbt_txt = get_robots_txt(url)
     whois = get_whois(domain)
     lookup = get_lookup(url)
     enm = get_enum(url)
-    create_report(name,url,ip_adr,domain,nmap,rbt_txt,whois,lookup,enm)
+    create_report(name,url,ip_adr,mail_adr,domain,nmap,rbt_txt,whois,lookup,enm)
 
-def create_report(name,url,ip_adr,domain,nmap,rbt_txt,whois,lkp,enm):
+def create_report(name,url,ip_adr,mail_adr,domain,nmap,rbt_txt,whois,lkp,enm):
     print('Creating report ...')
     prjct_dir = ROOT_DIR + '/' + name
     create_dir(prjct_dir)
@@ -31,6 +31,7 @@ def create_report(name,url,ip_adr,domain,nmap,rbt_txt,whois,lkp,enm):
     write_file(prjct_dir+"/Rapport.txt","\n\t- Domain Name       : "+domain)
     write_file(prjct_dir + "/Rapport.txt","\n\t=====================\n\n")
     write_file(prjct_dir+"/Rapport.txt","\n\t- Ip Address        : " + ip_adr)
+    write_file(prjct_dir+"/Rapport.txt","\n\t- Mail Address      : " + mail_adr)
     write_file(prjct_dir + "/Rapport.txt","\n\t======================\n\n")
     write_file(prjct_dir+"/Rapport.txt","\n\t- NMAP Results      : ")
     write_file(prjct_dir + "/Rapport.txt", "\n\t======================\n\n")

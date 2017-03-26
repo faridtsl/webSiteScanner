@@ -5,8 +5,17 @@ def get_ip_address(url):
     command = 'host '+str(url)
     process = os.popen(command)
     result = str(process.read())
+    mail = "Error while getting mail address"
     try:
-        ip = (result.split("\n")[0]).split("has address ")[1]
-        return ip
+        splitted=result.split('\n')
+        ip = splitted[0].split("has address ")[1]
+        for e in splitted:
+            if 'is handled by ' in e:
+                mail=e.split('is handled by ')[1] #.split(' ')[1]
+                break
+            mail = "Error while getting mail address"
+
     except:
-        return ""
+        ip= "Error while getting ip address"
+    return (ip,mail)
+
