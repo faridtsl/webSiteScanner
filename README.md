@@ -1,2 +1,2 @@
 # webSiteScanner
-Website scanner created for educational purpuses.
+Website scanner created for educational purposes.
